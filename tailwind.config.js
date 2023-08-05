@@ -12,6 +12,19 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      animation: {
+        'bounce-x': 'bounceX 1.5s ease-in-out infinite',
+      },
+      keyframes: {
+        bounceX: {
+            '0%, 100%': {
+                transform: 'translateX(0)'
+            },
+            '50%': {
+                transform: 'translateX(10px)'
+            }
+        }
+      }
     },
   },
   plugins: [],

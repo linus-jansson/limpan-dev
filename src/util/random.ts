@@ -6,7 +6,7 @@ export const randomValueInt = (min: number, max: number) => ((Math.random() * (m
 // Random hex generator with min, max and padding
 const randomColorHex = (min:number = 0x000000, max:number = 0xFFFFFF) => '#' + Math.abs(randomValueInt(min, max)).toString(16).padStart(6, '0');
 
-export function randomCSSGradient(min:number, max:number) : string {
+export function randomCSSGradient(min:number = 0x000000, max:number = 0xFFFFFF) : string {
     return `linear-gradient(${randomValueInt(0, 360)}deg, 
         ${randomColorHex(min, max)} 0%, 
         ${randomColorHex(min, max)} ${randomValueInt(50, 75)}%

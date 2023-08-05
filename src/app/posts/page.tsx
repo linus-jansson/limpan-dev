@@ -8,31 +8,21 @@ interface CardProps {
     date: Date,
 }
 
-async function getData() : Promise<CardProps[]> {
-    // const res = await fetch('https://...', { next: { revalidate: 3600 } })
-    return [
-        {
-            title: "Title with a longe name that will hopefully wrap",
-            slug: "generateSlug()",
-            date: new Date()
-        },
-        {
-            title: "lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. suspendisse lectus tortor",
-            slug: "generateSlug",
-            date: new Date()
-        },
-        {
-            title: "Title with a longe name that will hopefully wrap",
-            slug: "generateSlug",
-            date: new Date()
-        },        
-    ]
+async function getPosts() : Promise<CardProps[]> {
+    const res = await fetch('http://localhost:3000/api/posts', { next: { revalidate: 360 } })
+    const posts = await res.json()
+    const Returnposts = posts.map ((post: any) => {
+        return {
+            title: post.title,
+            slug: post.slug,
+            date: new Date(post.date),
+        }
+    })
+    return Returnposts
 }
 
-const img_ = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.insider.com%2F5c59e77ceb3ce80d46564023&f=1&nofb=1&ipt=a43bab240d17de336aa5a6bb0a239100ea8669fe99faa8e86945050eb345680b&ipo=images"
-
-function truncateText(text:string, length:number=64) : string {
-    return (text.length <= length) ? text : text.substring(0, length) + " [...]";
+function truncateText(text:string, length:number=64) {
+    return (text.length <= length) ? text : <>{text.substring(0, length)} <span className="tracking-widest text-white/75">[...]</span></>;
 }
 
 function Card({title, slug, date}: CardProps) {
@@ -44,9 +34,9 @@ function Card({title, slug, date}: CardProps) {
             style={{background: randomCSSGradient(minColorValue, maxColorValue)}}>
             <div className="flex flex-col pl-12 md:pl-16">
                 <span className="font-thin tracking-wider">{date.toLocaleDateString("en")}</span>
-                <span className="w-2/3 text-2xl font-semibold">{truncateText(title)}</span>
+                <span className="w-2/3 text-2xl font-semibold hover:underline" aria-label={title}>{truncateText(title)}</span>
             </div>
-            <Link href={`/posts/${slug}`} className="absolute text-4xl right-4 bottom-4 hover:border-b-4">
+            <Link href={`/posts/${slug}`} className="absolute text-4xl right-4 bottom-4 hover:animate-bounce-x" aria-label="Link to post">
                 <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M5 12l14 0" />
@@ -58,7 +48,7 @@ function Card({title, slug, date}: CardProps) {
     )
 }
 export default async function Posts() {
-    const posts = await getData()
+    const posts = await getPosts()
 
     return (
         <main className="bg-zinc-800">
