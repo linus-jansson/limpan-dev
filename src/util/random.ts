@@ -10,5 +10,5 @@ export function randomCSSGradient(min:number, max:number) : string {
     return `linear-gradient(${randomValueInt(0, 360)}deg, 
         ${randomColorHex(min, max)} 0%, 
         ${randomColorHex(min, max)} ${randomValueInt(50, 75)}%
-        )`;    
+    )`;    
 }
