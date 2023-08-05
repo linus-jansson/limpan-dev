@@ -26,8 +26,8 @@ function generateSlug () : string {
 const img_ = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.insider.com%2F5c59e77ceb3ce80d46564023&f=1&nofb=1&ipt=a43bab240d17de336aa5a6bb0a239100ea8669fe99faa8e86945050eb345680b&ipo=images"
 
 function Card({title, summary, slug, image, date}: CardProps) {
-    let maxColorValue = 7829367 // Decimal
-    let minColorValue = 1337 // Decimal
+    let maxColorValue = 0x999999 // Decimal
+    let minColorValue = 0x1337 // Decimal
 
     return (
         <div className="relative w-full pt-6 pb-32 duration-100 rounded-lg shadow-2xl md:pt-12 md:pb-64 md:max-h-96 md:hover:transform md:w-72 md:hover:scale-125"
