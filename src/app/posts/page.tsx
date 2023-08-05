@@ -51,7 +51,7 @@ function Card({title, summary, slug, image, date}: CardProps) {
     )
 }
 
-export default function() {
+export default function Posts() {
 
     return (
         <main className="grid w-full gap-6 py-12 place-items-center md:grid-cols-2 bg-stone-700 lg:grid-cols-3">
@@ -75,22 +75,7 @@ export default function() {
                 slug={generateSlug()}
                 image="Image"
                 date={new Date()}
-            />
-            <Card 
-                title="lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum?"
-                summary="Summary"
-                slug={generateSlug()}
-                image="Image"
-                date={new Date()}
-            />
-            <Card 
-                title="lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum?"
-                summary="Summary"
-                slug={generateSlug()}
-                image="Image"
-                date={new Date()}
-            />
-            
+            />            
         </main>
     )
 }
