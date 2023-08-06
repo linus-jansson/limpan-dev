@@ -7,19 +7,19 @@ export default function App() {
     const [loaded, setLoaded] = useState(false);
     const [media, setMedia] = useState<string | null>(null);
     const [gif, setGif] = useState<string | null>(null);
-    const [message, setMessage] = useState("");
+    const [progress, setProgress] = useState("Ready!");
     const ffmpegRef = useRef(new FFmpeg());
 
     const load = async () => {
-        const _baseURL = "https://unpkg.com/@ffmpeg/core@0.12.1/dist/esm";
+        const _baseURL = "https://unpkg.com/@ffmpeg/core@0.12.1/dist/umd";
         const ffmpeg = ffmpegRef.current;
         ffmpeg.on("log", ({ message }: { message: string }) => {
             // setMessage(message);
             console.info(message)
         });
 
-        ffmpeg.on("progress", ({ message }: { message: string }) => {
-            setMessage(`${parseInt(message) << 0 * 100}%`);
+        ffmpeg.on("progress", ({ progress }: { progress: number }) => {
+            setProgress(`${Math.floor(progress * 100)}%`);
         });
 
         await ffmpeg.load({
@@ -30,12 +30,12 @@ export default function App() {
         setLoaded(true);
     }
 
-    const toGif = async () => {
+    const convertToGif = async () => {
+        setProgress("")
         console.log("toGif")
         const ffmpeg = ffmpegRef.current
         if (!media) return;
         console.log("exists")
-
 
         await ffmpeg.writeFile("media.mp4", await fetchFile(media));
         await ffmpeg.exec(["-i", "media.mp4", "-vf", "split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse", "out.gif"]);
@@ -59,13 +59,13 @@ export default function App() {
 
     return loaded ? (
         <main>
-            <h1>FFmpeg loaded</h1>
-            <span>{message}</span>
+            <h1>MP4 To Gif converter</h1>
+            <span>{progress}</span>
             <input type="file" name="" onChange={handleUpload} id="" />
             {
                 media && <>
-                    <video src={media} controls></video>
-                    <button onClick={toGif}>Convert to GIF</button>
+                    <video src={media} controls autoPlay loop muted></video>
+                    <button onClick={convertToGif}>Convert to GIF</button>
                 </>
             }
             {
@@ -77,7 +77,7 @@ export default function App() {
         </main>
     ) :
     (
-        <span>Loading...</span>
+        <span>Loading in FFMPEG, this can take a minute depending on internet speed!</span>
     )
 
 }
