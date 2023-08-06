@@ -26,17 +26,19 @@ function truncateText(text:string, length:number=64) {
 }
 
 function Card({title, slug, date}: CardProps) {
-    const maxColorValue = 0xFFFFFF // Decimal
-    const minColorValue = 0x1337 // Decimal
+    const maxColorValue = 0x999999 // Gray Hex
+    const minColorValue = 0x000000 // Black Hex
 
     return (
-        <div className="relative w-full pt-6 pb-16 duration-100 transform rounded-lg shadow-xl hover:shadow-2xl md:pt-12 md:pb-64 md:max-h-96 md:w-72 hover:scale-125"
+        <div className="relative w-full pt-6 pb-16 duration-100 transform rounded-lg shadow-xl hover:shadow-2xl md:pt-12 md:pb-64 md:max-h-96 md:w-72 md:hover:scale-110"
             style={{background: randomCSSGradient(minColorValue, maxColorValue)}}>
-            <div className="flex flex-col pl-12 md:pl-16">
-                <span className="font-thin tracking-wider">{date.toLocaleDateString("en")}</span>
-                <span className="w-2/3 text-2xl font-semibold hover:underline" aria-label={title}>{truncateText(title)}</span>
+            <div className="flex flex-col pl-12 md:pl-16 text-zinc-100">
+                <span className="tracking-wider text-zinc-100/75">{date.toLocaleDateString("en")}</span>
+                <Link href={`/posts/${slug}`} className="w-2/3 text-2xl font-semibold hover:underline" aria-label={title}>
+                    <span >{truncateText(title)}</span>
+                </Link>
             </div>
-            <Link href={`/posts/${slug}`} className="absolute text-4xl right-4 bottom-4 hover:animate-bounce-x" aria-label="Link to post">
+            <Link href={`/posts/${slug}`} className="absolute text-4xl right-4 bottom-4 md:hover:animate-bounce-x" aria-label="Link to post">
                 <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M5 12l14 0" />
@@ -55,7 +57,7 @@ export default async function Posts() {
             <header className="p-8 text-3xl text-left">
                 <span className="font-thin tracking-widest">Hello</span>
             </header>
-            <section className="grid w-full px-6 py-12 gap-y-12 md:gap-12 md:px-0 md:place-items-center grid-flow-cols md:grid-cols-2 lg:grid-cols-3">
+            <section className="grid w-full px-6 py-12 mx-auto md:container gap-y-12 md:gap-12 md:px-0 md:place-items-center grid-flow-cols md:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post, index) => {
                     return <Card key={index} title={post.title} slug={post.slug} date={post.date} />
                 })}

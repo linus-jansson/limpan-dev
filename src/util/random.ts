@@ -2,7 +2,7 @@
 // https://stackoverflow.com/questions/53247687/set-a-minimum-value-for-randomly-generated-numbers
 
 /* Random integer between @param min and @param max */
-export const randomValueInt = (min: number, max: number) => ((Math.random() * (max - min + 1)) + min) << 0;
+export const randomValueInt = (min: number, max: number) => Math.floor((Math.random() * (max - min + 1)) + min);
 // Random hex generator with min, max and padding
 const randomColorHex = (min:number = 0x000000, max:number = 0xFFFFFF) => '#' + Math.abs(randomValueInt(min, max)).toString(16).padStart(6, '0');
 
