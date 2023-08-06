@@ -38,7 +38,7 @@ export default function App() {
 
 
         await ffmpeg.writeFile("media.mp4", await fetchFile(media));
-        await ffmpeg.exec(["-i", "media.mp4", "-t", "2.5", "-ss", "2.0", "-f", "gif", "out.gif"]);
+        await ffmpeg.exec(["-i", "media.mp4", "-vf", "split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse", "out.gif"]);
         const data = await ffmpeg.readFile("out.gif");
         setGif(URL.createObjectURL(
             new Blob([data.buffer], { type: "video/gif" })
