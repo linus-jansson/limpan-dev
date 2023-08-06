@@ -8,8 +8,9 @@ interface CardProps {
     date: Date,
 }
 
+export const dynamic = 'force-dynamic';
 async function getPosts() : Promise<CardProps[]> {
-    const res = await fetch('http://localhost:3000/api/posts', { next: { revalidate: 360 } })
+    const res = await fetch('/api/posts', { next: { revalidate: 360 } })
     const posts = await res.json()
     const Returnposts = posts.map ((post: any) => {
         return {
